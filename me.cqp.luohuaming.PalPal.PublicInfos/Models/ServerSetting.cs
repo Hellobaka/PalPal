@@ -1,0 +1,72 @@
+﻿namespace me.cqp.luohuaming.PalPal.PublicInfos.Models
+{
+    public class ServerSetting
+    {
+        public string Difficulty { get; set; }
+        public int DayTimeSpeedRate { get; set; }
+        public int NightTimeSpeedRate { get; set; }
+        public int ExpRate { get; set; }
+        public int PalCaptureRate { get; set; }
+        public int PalSpawnNumRate { get; set; }
+        public int PalDamageRateAttack { get; set; }
+        public int PalDamageRateDefense { get; set; }
+        public int PlayerDamageRateAttack { get; set; }
+        public int PlayerDamageRateDefense { get; set; }
+        public int PlayerStomachDecreaceRate { get; set; }
+        public int PlayerStaminaDecreaceRate { get; set; }
+        public int PlayerAutoHPRegeneRate { get; set; }
+        public int PlayerAutoHpRegeneRateInSleep { get; set; }
+        public int PalStomachDecreaceRate { get; set; }
+        public int PalStaminaDecreaceRate { get; set; }
+        public int PalAutoHPRegeneRate { get; set; }
+        public int PalAutoHpRegeneRateInSleep { get; set; }
+        public int BuildObjectDamageRate { get; set; }
+        public int BuildObjectDeteriorationDamageRate { get; set; }
+        public int CollectionDropRate { get; set; }
+        public int CollectionObjectHpRate { get; set; }
+        public int CollectionObjectRespawnSpeedRate { get; set; }
+        public int EnemyDropItemRate { get; set; }
+        public string DeathPenalty { get; set; }
+        public bool bEnablePlayerToPlayerDamage { get; set; }
+        public bool bEnableFriendlyFire { get; set; }
+        public bool bEnableInvaderEnemy { get; set; }
+        public bool bActiveUNKO { get; set; }
+        public bool bEnableAimAssistPad { get; set; }
+        public bool bEnableAimAssistKeyboard { get; set; }
+        public int DropItemMaxNum { get; set; }
+        public int DropItemMaxNum_UNKO { get; set; }
+        public int BaseCampMaxNum { get; set; }
+        public int BaseCampWorkerMaxNum { get; set; }
+        public int DropItemAliveMaxHours { get; set; }
+        public bool bAutoResetGuildNoOnlinePlayers { get; set; }
+        public int AutoResetGuildTimeNoOnlinePlayers { get; set; }
+        public int GuildPlayerMaxNum { get; set; }
+        public int PalEggDefaultHatchingTime { get; set; }
+        public int WorkSpeedRate { get; set; }
+        public bool bIsMultiplay { get; set; }
+        public bool bIsPvP { get; set; }
+        public bool bCanPickupOtherGuildDeathPenaltyDrop { get; set; }
+        public bool bEnableNonLoginPenalty { get; set; }
+        public bool bEnableFastTravel { get; set; }
+        public bool bIsStartLocationSelectByMap { get; set; }
+        public bool bExistPlayerAfterLogout { get; set; }
+        public bool bEnableDefenseOtherGuildPlayer { get; set; }
+        public int CoopPlayerMaxNum { get; set; }
+        public int ServerPlayerMaxNum { get; set; }
+        public string ServerName { get; set; }
+        public string ServerDescription { get; set; }
+        public int PublicPort { get; set; }
+        public string PublicIP { get; set; }
+        public bool RCONEnabled { get; set; }
+        public int RCONPort { get; set; }
+        public string Region { get; set; }
+        public bool bUseAuth { get; set; }
+        public string BanListURL { get; set; }
+        public bool RESTAPIEnabled { get; set; }
+        public int RESTAPIPort { get; set; }
+        public bool bShowPlayerList { get; set; }
+        public string AllowConnectPlatform { get; set; }
+        public bool bIsUseBackupSaveData { get; set; }
+        public string LogFormatType { get; set; }
+    }
+}
