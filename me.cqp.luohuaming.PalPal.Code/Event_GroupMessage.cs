@@ -34,7 +34,7 @@ namespace me.cqp.luohuaming.PalPal.Code
                     return result;
                 }
 
-                if (MainSave.EnableGroupMessageSend && MainSave.GroupSendMessage.Contains(e.FromGroup))
+                if (MainSave.EnableGroupMessageSend && MainSave.GroupSendMessage.Contains(e.FromGroup) && !e.Message.Text.StartsWith(".pal"))
                 {
                     AnnounceMessage.Announce(FormatMessage(e.FromGroup, e.FromQQ, e.Message.Text));
                 }
@@ -57,35 +57,34 @@ namespace me.cqp.luohuaming.PalPal.Code
         {
             message = img.Replace(message, "[图片]");
             message = record.Replace(message, "[语音]");
-            MatchCollection match = at.Matches(message);
-            foreach (Match item in match)
-            {
-                if (item.Groups.Count != 2 || long.TryParse(item.Groups[1].Value, out long value))
-                {
-                    continue;
-                }
-
-                string card = "";
-                if (MemberCardCache.TryGetValue((group, value), out card) is false)
-                {
-                    card = MainSave.CQApi.GetGroupMemberInfo(group, value)?.Card;
-                    if (!string.IsNullOrEmpty(card))
-                    {
-                        MemberCardCache.Add((group, value), card);
-                    }
-                    else
-                    {
-                        card = $"@{value}";
-                    }
-                }
-
-                message = message.Replace(item.ToString(), card);
-            }
-
-            message = other.Replace(message, "");
-
             try
             {
+                MatchCollection match = at.Matches(message);
+                foreach (Match item in match)
+                {
+                    if (item.Groups.Count != 2 || long.TryParse(item.Groups[1].Value, out long value))
+                    {
+                        continue;
+                    }
+
+                    if (MemberCardCache.TryGetValue((group, value), out string card) is false)
+                    {
+                        card = MainSave.CQApi.GetGroupMemberInfo(group, value)?.Card;
+                        if (!string.IsNullOrEmpty(card))
+                        {
+                            MemberCardCache.Add((group, value), card);
+                        }
+                        else
+                        {
+                            card = $"@{value}";
+                        }
+                    }
+
+                    message = message.Replace(item.ToString(), card);
+                }
+
+                message = other.Replace(message, "");
+
                 if (GroupNameCache.TryGetValue(group, out var groupName) is false)
                 {
                     groupName = MainSave.CQApi.GetGroupInfo(group)?.Name;
