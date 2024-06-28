@@ -66,6 +66,7 @@
     <Compile Include="OrderFunctions\AnnounceMessage.cs" />
     <Compile Include="OrderFunctions\BanPlayer.cs" />
     <Compile Include="OrderFunctions\GetPlayerList.cs" />
+    <Compile Include="OrderFunctions\ServerInfo.cs" />
     <Compile Include="OrderFunctions\KickPlayer.cs" />
     <Compile Include="OrderFunctions\RestartServer.cs" />
     <Compile Include="OrderFunctions\StartServer.cs" />
