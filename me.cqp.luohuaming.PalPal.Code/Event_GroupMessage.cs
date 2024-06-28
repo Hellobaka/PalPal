@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using me.cqp.luohuaming.PalPal.Sdk.Cqp.EventArgs;
 using me.cqp.luohuaming.PalPal.PublicInfos;
 using me.cqp.luohuaming.PalPal.PublicInfos.API;
+using System.Xml.Linq;
 
 namespace me.cqp.luohuaming.PalPal.Code
 {
@@ -67,8 +68,15 @@ namespace me.cqp.luohuaming.PalPal.Code
                 string card = "";
                 if (MemberCardCache.TryGetValue((group, value), out card) is false)
                 {
-                    card = MainSave.CQApi.GetGroupMemberInfo(group, value).Card;
-                    MemberCardCache.Add((group, value), card);
+                    card = MainSave.CQApi.GetGroupMemberInfo(group, value)?.Card;
+                    if (!string.IsNullOrEmpty(card))
+                    {
+                        MemberCardCache.Add((group, value), card);
+                    }
+                    else
+                    {
+                        card = $"@{value}";
+                    }
                 }
 
                 message = message.Replace(item.ToString(), card);
@@ -85,6 +93,10 @@ namespace me.cqp.luohuaming.PalPal.Code
                     {
                         GroupNameCache.Add(group, groupName);
                     }
+                    else
+                    {
+                        groupName = group.ToString();
+                    }
                 }
 
                 if (MemberCardCache.TryGetValue((group, qq), out var name) is false)
@@ -93,6 +105,10 @@ namespace me.cqp.luohuaming.PalPal.Code
                     if (!string.IsNullOrEmpty(name))
                     {
                         MemberCardCache.Add((group, qq), name);
+                    }
+                    else
+                    {
+                        name = qq.ToString();
                     }
                 }
 
