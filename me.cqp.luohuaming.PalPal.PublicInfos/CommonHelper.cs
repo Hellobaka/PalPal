@@ -112,15 +112,15 @@ namespace me.cqp.luohuaming.PalPal.PublicInfos
                 using HttpClient httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("basic", GetBasicAuth());
                 
-                var getTask = httpClient.PostAsync(url, JsonContent.Create(body));
-                bool waitResult = getTask.Wait(timeout);
+                var postTask = httpClient.PostAsync(url, JsonContent.Create(body));
+                bool waitResult = postTask.Wait(timeout);
 
                 if (waitResult is false)
                 {
                     throw new TimeoutException();
                 }
-                getTask.Result.EnsureSuccessStatusCode();
-                var readTask = getTask.Result.Content.ReadAsStringAsync();
+                postTask.Result.EnsureSuccessStatusCode();
+                var readTask = postTask.Result.Content.ReadAsStringAsync();
                 readTask.Wait();
                 return readTask.Result;
             }
