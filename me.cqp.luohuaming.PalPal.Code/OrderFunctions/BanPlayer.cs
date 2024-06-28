@@ -44,13 +44,14 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
             string target = e.Message.Text.Replace(GetOrderStr(), "").Trim();
             if (string.IsNullOrEmpty(target))
             {
-                sendText.MsgToSend.Add("无效指令，请添加需要提出的玩家序号或名称或SteamID");
+                sendText.MsgToSend.Add("无效指令，请添加需要ban的玩家序号或名称或SteamID");
                 return result;
             }
 
             int index = int.TryParse(target, out int v) ? v : -1;
             string steamId = "";
             PlayerInfo info = null;
+            index--;
             if (index > 0 && index < MainSave.PlayerInfos.Count)
             {
                 info = MainSave.PlayerInfos[index];

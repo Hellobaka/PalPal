@@ -44,13 +44,14 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
             string target = e.Message.Text.Replace(GetOrderStr(), "").Trim();
             if (string.IsNullOrEmpty(target))
             {
-                sendText.MsgToSend.Add("无效指令，请添加需要提出的玩家序号或名称或SteamID");
+                sendText.MsgToSend.Add("无效指令，请添加需要踢出的玩家序号或名称或SteamID");
                 return result;
             }
 
             int index = int.TryParse(target, out int v) ? v : -1;
             string steamId = "";
             PlayerInfo info = null;
+            index--;
             if (index > 0 && index < MainSave.PlayerInfos.Count)
             {
                 info = MainSave.PlayerInfos[index];
@@ -68,7 +69,7 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
                 return result;
             }
 
-            if (PublicInfos.API.BanPlayer.Ban(steamId, "管理员将您踢出了游戏") is false)
+            if (PublicInfos.API.KickPlayer.Kick(steamId, "管理员将您踢出了游戏") is false)
             {
                 sendText.MsgToSend.Add("向服务器发送指令失败");
                 return result;
