@@ -46,5 +46,35 @@ namespace me.cqp.luohuaming.PalPal.PublicInfos
         public static List<long> EnabledGroup { get; set; }
         
         public static List<long> AdminQQ { get; set; }
+
+        private static PerformanceCounter MemoryCounter { get; set; }
+
+        public static double GetServerMemoryUsage()
+        {
+            if (MemoryCounter == null)
+            {
+                try
+                {
+                    MemoryCounter = new PerformanceCounter("Process", "Working Set - Private", CommonHelper.GetServerProcessName());
+                }
+                catch
+                {
+                    MemoryCounter = null;
+                }
+            }
+
+            if (MemoryCounter != null)
+            {
+                try
+                {
+                    return MemoryCounter.NextValue();
+                }
+                catch
+                {
+                    MemoryCounter = null;
+                }
+            }
+            return 0;
+        }
     }
 }

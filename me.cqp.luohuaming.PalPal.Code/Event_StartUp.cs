@@ -73,8 +73,7 @@ namespace me.cqp.luohuaming.PalPal.Code
                 {
                     return;
                 }
-
-                var memory = p.PrivateMemorySize64 / 1024.0 / 1024;
+                var memory = MainSave.GetServerMemoryUsage() / 1024 / 1024;
                 bool restart = false;
                 if (memory > MainSave.MaxMemoryUsage)
                 {
@@ -82,7 +81,7 @@ namespace me.cqp.luohuaming.PalPal.Code
                     MainSave.CQLog.Info("服务内存超载", $"当前内存: {memory:f2}MB");
                     MemoryUsageMonitor.Stop();
                     p = CommonHelper.RestartServer(p, "服务内存超载，自动重启");
-                    if (p != null) 
+                    if (p != null)
                     {
                         MainSave.PalServerProcess = p;
                         MainSave.CQLog.Info("服务内存超载", $"重启完成");
