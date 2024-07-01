@@ -21,7 +21,7 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
 
         public FunctionResult Progress(CQGroupMessageEventArgs e)
         {
-            if (e.FromQQ != MainSave.AdminQQ)
+            if (!MainSave.AdminQQ.Contains(e.FromQQ))
             {
                 return new FunctionResult
                 {
@@ -46,7 +46,7 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
                 sendText.MsgToSend.Add("无法找到目标进程");
                 return result;
             }
-            
+
             try
             {
                 bool sendShutdown = ShutDownServer.ShutDown(MainSave.ShutDownWaitTime, "管理员主动关闭服务器");
@@ -54,10 +54,9 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
                 {
                     e.FromGroup.SendGroupMessage("已向服务器广播关闭消息，等待进程关闭...");
                 }
-                if (Task.Run(() => p?.WaitForExit()).Wait((MainSave.ShutDownWaitTime + 5) * 1000) is false)
-                {
-                    p?.Kill();
-                }
+                Task.Run(() => p?.WaitForExit()).Wait((MainSave.ShutDownWaitTime + 5) * 1000);
+
+                p?.Kill();
                 sendText.MsgToSend.Add("服务已终止");
             }
             catch (Exception exc)
@@ -65,7 +64,7 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
                 sendText.MsgToSend.Add("服务终止失败");
                 e.CQLog.Error("StopServer", e.Message);
             }
-            
+
             return result;
         }
 

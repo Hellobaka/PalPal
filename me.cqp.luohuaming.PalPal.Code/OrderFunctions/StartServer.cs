@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using me.cqp.luohuaming.PalPal.Sdk.Cqp.EventArgs;
 using me.cqp.luohuaming.PalPal.PublicInfos;
+using System.Threading;
 
 namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
 {
@@ -20,7 +21,7 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
 
         public FunctionResult Progress(CQGroupMessageEventArgs e)
         {
-            if (e.FromQQ != MainSave.AdminQQ)
+            if (!MainSave.AdminQQ.Contains(e.FromQQ))
             {
                 return new FunctionResult
                 {
@@ -53,12 +54,15 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
                 return result;
             }
 
-            MainSave.PalServerProcess = Process.Start(new ProcessStartInfo
+            Process.Start(new ProcessStartInfo
             {
                 FileName = MainSave.PalServerPath,
                 WorkingDirectory = Path.GetDirectoryName(MainSave.PalServerPath)
             });
-            
+            Thread.Sleep(1000);
+
+            MainSave.PalServerProcess = CommonHelper.GetOrFindProcess();
+
             sendText.MsgToSend.Add("服务已启动");
             return result;
         }

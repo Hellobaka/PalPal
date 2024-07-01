@@ -152,17 +152,19 @@ namespace me.cqp.luohuaming.PalPal.PublicInfos
                 return null;
             }
             ShutDownServer.ShutDown(MainSave.ShutDownWaitTime, message);
-            if (Task.Run(() => p?.WaitForExit()).Wait((MainSave.ShutDownWaitTime + 5) * 1000) is false)
-            {
-                p?.Kill();
-            }
-            
+
+            Task.Run(() => p?.WaitForExit()).Wait((MainSave.ShutDownWaitTime + 5) * 1000);
+            p?.Kill();
+
             Thread.Sleep(500);
-            return Process.Start(new ProcessStartInfo
+            Process.Start(new ProcessStartInfo
             {
                 FileName = MainSave.PalServerPath,
                 WorkingDirectory = Path.GetDirectoryName(MainSave.PalServerPath)
             });
+            Thread.Sleep(1000);
+
+            return GetOrFindProcess();
         }
 
         public static Process GetOrFindProcess()
@@ -172,12 +174,6 @@ namespace me.cqp.luohuaming.PalPal.PublicInfos
             {
                 string processName = "PalServer-Win64-Shipping-Cmd";
                 p = Process.GetProcessesByName(processName).FirstOrDefault();
-                if (p == null && File.Exists(MainSave.PalServerPath))
-                {
-                    processName = Path.GetFileName(MainSave.PalServerPath);
-                    p = Process.GetProcessesByName(processName).FirstOrDefault();
-                }
-
                 MainSave.PalServerProcess = p;
             }
 

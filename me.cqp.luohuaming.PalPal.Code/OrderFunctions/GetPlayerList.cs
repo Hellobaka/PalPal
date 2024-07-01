@@ -43,13 +43,13 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
             for (var i = 0; i < list.Count - 1; i++)
             {
                 var item = list[i];
-                sb.AppendLine($"{i + 1}. {item.name}[{item.userId}]({(int)item.ping}ms)");
+                sb.AppendLine($"{i + 1}. {item.name}(Lv.{item.level})[{item.userId}]({(int)item.ping}ms)");
             }
 
             if (list.Count > 0)
             {
                 var item = list.Last();
-                sb.Append($"{list.Count}. {item.name}[{item.userId}]({(int)item.ping}ms)");
+                sb.Append($"{list.Count}. {item.name}(Lv.{item.level})[{item.userId}]({(int)item.ping}ms)");
             }
 
             sendText.MsgToSend.Add($"玩家列表[{list.Count}]：\n" + sb);
