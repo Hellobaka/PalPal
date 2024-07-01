@@ -45,7 +45,7 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
                     $"人数：{info1.currentplayernum}/{info1.maxplayernum}\n" +
                     $"服务器帧数：{info1.serverfps}fps\n" +
                     $"启动时间：{(int)timeSpan.TotalDays} 天 {timeSpan.Hours} 小时 {timeSpan.Minutes} 分钟\n" +
-                    $"占用内存：{p.PrivateMemorySize64 / 1024.0 / 1024 / 1024:f2}GB");
+                    $"占用内存：{MainSave.GetServerMemoryUsage() / 1024.0 / 1024 / 1024:f2}GB");
                 return result;
             }
             else
