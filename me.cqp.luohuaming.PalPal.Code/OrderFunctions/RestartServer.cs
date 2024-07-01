@@ -15,14 +15,14 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
     public class RestartServer : IOrderModel
     {
         public bool ImplementFlag { get; set; } = true;
-        
+
         public string GetOrderStr() => ".pal restart";
 
         public bool Judge(string destStr) => destStr.Replace("＃", "#").StartsWith(GetOrderStr());
 
         public FunctionResult Progress(CQGroupMessageEventArgs e)
         {
-            if (e.FromQQ != MainSave.AdminQQ)
+            if (!MainSave.AdminQQ.Contains(e.FromQQ))
             {
                 return new FunctionResult
                 {
@@ -40,14 +40,14 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
                 SendID = e.FromGroup,
             };
             result.SendObject.Add(sendText);
-            
+
             if (File.Exists(MainSave.PalServerPath) is false)
             {
                 sendText.MsgToSend.Add("指定的服务文件路径不存在，无法重启");
                 return result;
             }
             e.FromGroup.SendGroupMessage($"已向服务器广播停止消息，请等待");
-            var p  = CommonHelper.RestartServer(MainSave.PalServerProcess, "管理员主动重启服务器");
+            var p = CommonHelper.RestartServer(MainSave.PalServerProcess, "管理员主动重启服务器");
             if (p != null)
             {
                 sendText.MsgToSend.Add("服务已重新启动");

@@ -21,7 +21,7 @@ namespace me.cqp.luohuaming.PalPal.Code.OrderFunctions
 
         public FunctionResult Progress(CQGroupMessageEventArgs e)
         {
-            if (e.FromQQ != MainSave.AdminQQ)
+            if (!MainSave.AdminQQ.Contains(e.FromQQ))
             {
                 return new FunctionResult
                 {

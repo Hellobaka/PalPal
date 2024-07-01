@@ -45,6 +45,6 @@ namespace me.cqp.luohuaming.PalPal.PublicInfos
         
         public static List<long> EnabledGroup { get; set; }
         
-        public static long AdminQQ { get; set; }
+        public static List<long> AdminQQ { get; set; }
     }
 }

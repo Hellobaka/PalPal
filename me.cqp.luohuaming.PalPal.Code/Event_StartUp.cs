@@ -153,7 +153,7 @@ namespace me.cqp.luohuaming.PalPal.Code
             MainSave.EnableMemoryMonitor = ConfigHelper.GetConfig("EnableMemoryMonitor", false);
             MainSave.GroupSendMessage = ConfigHelper.GetConfig("GroupSendMessage", new List<long>());
             MainSave.EnabledGroup = ConfigHelper.GetConfig("EnabledGroup", new List<long>());
-            MainSave.AdminQQ = ConfigHelper.GetConfig("AdminQQ", 0);
+            MainSave.AdminQQ = ConfigHelper.GetConfig("AdminQQ", new List<long>());
             MainSave.MaxMemoryUsage = ConfigHelper.GetConfig("MaxMemoryUsage", 10 * 1024);
             MainSave.EnableGroupMessageSend = ConfigHelper.GetConfig("EnableGroupMessageSend", false);
             MainSave.ShutDownWaitTime = ConfigHelper.GetConfig("ShutDownWaitTime", 10);
