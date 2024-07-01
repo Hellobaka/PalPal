@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using me.cqp.luohuaming.PalPal.PublicInfos.Models;
 using Newtonsoft.Json;
 
@@ -9,7 +11,8 @@ namespace me.cqp.luohuaming.PalPal.PublicInfos.API;
 public class AnnounceMessage
 {
     private static readonly string Api = "v1/api/announce";
-
+    private static object _lock = new object();
+    
     public static bool Announce(string message)
     {
         if (string.IsNullOrEmpty(message))
@@ -18,14 +21,18 @@ public class AnnounceMessage
         }
         try
         {
-            string url = CommonHelper.CombineUrl(MainSave.PalServerUrl, Api);
-            string ret = CommonHelper.Post(url, new{ message });
-            if (string.IsNullOrEmpty(ret))
+            lock (_lock)
             {
-                throw new HttpRequestException("Get Result is invalid");
-            }
+                string url = CommonHelper.CombineUrl(MainSave.PalServerUrl, Api);
+                string ret = CommonHelper.Post(url, new { message });
+                if (string.IsNullOrEmpty(ret))
+                {
+                    throw new HttpRequestException("Get Result is invalid");
+                }
+                Thread.Sleep(1000);
 
-            return !string.IsNullOrEmpty(ret);
+                return !string.IsNullOrEmpty(ret);
+            }
         }
         catch (Exception e)
         {

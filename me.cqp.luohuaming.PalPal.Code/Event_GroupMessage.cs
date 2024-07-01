@@ -34,14 +34,14 @@ namespace me.cqp.luohuaming.PalPal.Code
                     return result;
                 }
 
-                if (MainSave.EnableGroupMessageSend && MainSave.GroupSendMessage.Contains(e.FromGroup) && !e.Message.Text.StartsWith(".pal"))
-                {
-                    AnnounceMessage.Announce(FormatMessage(e.FromGroup, e.FromQQ, e.Message.Text));
-                }
-
                 foreach (var item in MainSave.Instances.Where(item => item.Judge(e.Message.Text)))
                 {
                     return item.Progress(e);
+                }
+
+                if (MainSave.EnableGroupMessageSend && MainSave.GroupSendMessage.Contains(e.FromGroup) && !e.Message.Text.StartsWith(".pal"))
+                {
+                    Task.Run(() => AnnounceMessage.Announce(FormatMessage(e.FromGroup, e.FromQQ, e.Message.Text)));
                 }
 
                 return result;
@@ -84,7 +84,10 @@ namespace me.cqp.luohuaming.PalPal.Code
                 }
 
                 message = other.Replace(message, "");
-
+                if (string.IsNullOrEmpty(message))
+                {
+                    return null;
+                }
                 if (GroupNameCache.TryGetValue(group, out var groupName) is false)
                 {
                     groupName = MainSave.CQApi.GetGroupInfo(group)?.Name;
