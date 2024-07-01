@@ -172,8 +172,7 @@ namespace me.cqp.luohuaming.PalPal.PublicInfos
             Process p = MainSave.PalServerProcess;
             if (p == null || p.HasExited)
             {
-                string processName = "PalServer-Win64-Shipping-Cmd";
-                p = Process.GetProcessesByName(processName).FirstOrDefault();
+                p = Process.GetProcessesByName(GetServerProcessName()).FirstOrDefault();
                 MainSave.PalServerProcess = p;
             }
 
@@ -185,5 +184,7 @@ namespace me.cqp.luohuaming.PalPal.PublicInfos
             
             return p;
         }
+
+        public static string GetServerProcessName() => "PalServer-Win64-Shipping-Cmd";
     }
 }
