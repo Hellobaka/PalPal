@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using me.cqp.luohuaming.PalPal.PublicInfos.Models;
@@ -15,6 +16,12 @@ public class GetPlayerList
     {
         try
         {
+            Process p = CommonHelper.GetOrFindProcess();
+            if (p == null || p.HasExited)
+            {
+                return [];
+            }
+
             string url = CommonHelper.CombineUrl(MainSave.PalServerUrl, Api);
             string ret = CommonHelper.Get(url);
             if (string.IsNullOrEmpty(ret))

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using me.cqp.luohuaming.PalPal.PublicInfos.Models;
@@ -14,6 +15,12 @@ public class GetServerSetting
     {
         try
         {
+            Process p = CommonHelper.GetOrFindProcess();
+            if (p == null || p.HasExited)
+            {
+                return null;
+            }
+
             string url = CommonHelper.CombineUrl(MainSave.PalServerUrl, Api);
             string ret = CommonHelper.Get(url);
             if (string.IsNullOrEmpty(ret))

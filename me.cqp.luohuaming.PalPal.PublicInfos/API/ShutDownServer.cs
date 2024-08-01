@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 
 namespace me.cqp.luohuaming.PalPal.PublicInfos.API;
@@ -11,6 +12,12 @@ public class ShutDownServer
     {
         try
         {
+            Process p = CommonHelper.GetOrFindProcess();
+            if (p == null || p.HasExited)
+            {
+                return false;
+            }
+
             message = message + $" 将于 {waittime} 秒后关闭服务器";
             string url = CommonHelper.CombineUrl(MainSave.PalServerUrl, Api);
             string ret = CommonHelper.Post(url, new{ waittime, message });

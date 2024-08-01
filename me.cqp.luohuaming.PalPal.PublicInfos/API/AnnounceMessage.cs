@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -23,6 +24,11 @@ public class AnnounceMessage
         {
             lock (_lock)
             {
+                Process p = CommonHelper.GetOrFindProcess();
+                if (p == null || p.HasExited)
+                {
+                    return false;
+                }
                 string url = CommonHelper.CombineUrl(MainSave.PalServerUrl, Api);
                 string ret = CommonHelper.Post(url, new { message });
                 if (string.IsNullOrEmpty(ret))

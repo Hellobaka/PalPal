@@ -91,6 +91,7 @@ namespace me.cqp.luohuaming.PalPal.Code
                     {
                         MainSave.CQLog.Warning("服务内存超载", $"重启失败，可能由于路径错误。内存检查时钟已停止，请重载插件以恢复");
                     }
+                    return;
                 }
 
                 var datetime = DateTime.Now;
@@ -102,7 +103,7 @@ namespace me.cqp.luohuaming.PalPal.Code
                     MainSave.CQLog.Info("定时重启", $"当前内存: {memory:f2}MB");
                     MemoryUsageMonitor.Stop();
 
-                    p = CommonHelper.RestartServer(p, "定时重启");
+                    p = CommonHelper.GetOrFindProcess();
                     if (p != null)
                     {
                         MainSave.PalServerProcess = CommonHelper.RestartServer(p, "定时重启");

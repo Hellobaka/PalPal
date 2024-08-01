@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 
 namespace me.cqp.luohuaming.PalPal.PublicInfos.API;
@@ -18,6 +19,12 @@ public class KickPlayer
     {
         try
         {
+            Process p = CommonHelper.GetOrFindProcess();
+            if (p == null || p.HasExited)
+            {
+                return false;
+            }
+
             string url = CommonHelper.CombineUrl(MainSave.PalServerUrl, Api);
             string ret = CommonHelper.Post(url, new{ userid, message });
             if (string.IsNullOrEmpty(ret))
